@@ -11,15 +11,16 @@
     <div id="respuesta"></div>
     <script>
         function cargarajax() {
-            var ajax = new XMLHttpRequest();
-            ajax.open('GET', 'funcion.html', true);
-            ajax.onreadystatechange = function () {
-                console.log("Estado cambio: " + ajax.readyState);
-                var resp = document.getElementById('respuesta');
-                if (ajax.readyState == 4) {
-                    resp.innerHTML = ajax.responseText;
-                } else { resp.innerHTML = "Espere porfavor"; }
+            function updateProgress(e) {
+                console.log("Espere porfavor.")
             }
+            var ajax = new XMLHttpRequest();
+            ajax.open('GET', 'funcion.html');
+            ajax.addEventListener("load", (e) => {
+                var resp = document.querySelector('#respuesta');
+                resp.innerHTML = ajax.responseText;
+            })
+            ajax.addEventListener('progress', updateProgress)
             ajax.send();
         }
     </script>
